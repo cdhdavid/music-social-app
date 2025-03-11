@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音乐社交 - 用户注册</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/enhanced-ui.css">
+  <link rel="stylesheet" href="../assets/css/iconfont.css">
+  <style>
+    /* Material Icons 字体声明 */
+    @font-face {
+      font-family: 'Material Icons';
+      font-style: normal;
+      font-weight: 400;
+      src: url('../assets/fonts/MaterialIcons-Regular.woff2') format('woff2'),
+           url('../assets/fonts/MaterialIcons-Regular.woff') format('woff'),
+           url('../assets/fonts/MaterialIcons-Regular.ttf') format('truetype');
+    }
+
+    .material-icons {
+      font-family: 'Material Icons';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: 'liga';
+    }
+    
+    .register-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: var(--spacing-xl) var(--spacing-md);
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(255, 78, 138, 0.05), rgba(140, 82, 255, 0.05));
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    .register-header {
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+      animation: fadeIn 1s ease-out;
+    }
+    
+    .app-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: var(--spacing-md);
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+      transition: all 0.5s;
+    }
+    
+    .app-logo:hover {
+      transform: rotate(15deg) scale(1.1);
+    }
+    
+    .app-title {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .register-form {
+      width: 100%;
+      max-width: 400px;
+      background-color: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-md);
+      margin-bottom: var(--spacing-lg);
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 1.2s ease-out;
+    }
+    
+    .register-form::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    .input-group {
+      margin-bottom: var(--spacing-md);
+      position: relative;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 12px 16px 12px 48px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--divider);
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .input-group input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(255, 78, 138, 0.1);
+      outline: none;
+    }
+    
+    .input-group input::placeholder {
+      color: var(--text-lighter);
+    }
+    
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      font-size: 20px;
+      transition: all 0.3s;
+    }
+    
+    .input-group input:focus + .input-icon,
+    .input-group:hover .input-icon {
+      color: var(--primary-color);
+    }
+    
+    .verification-code-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .verification-code-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-50%) scale(1.05);
+    }
+    
+    .social-login {
+      margin: var(--spacing-lg) 0;
+      text-align: center;
+    }
+    
+    .social-login-title {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-bottom: var(--spacing-md);
+      position: relative;
+    }
+    
+    .social-login-title::before,
+    .social-login-title::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background-color: var(--divider);
+    }
+    
+    .social-login-title::before {
+      left: 0;
+    }
+    
+    .social-login-title::after {
+      right: 0;
+    }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-md);
+    }
+    
+    .social-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .social-icon:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .social-icon img {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .social-icon.wechat {
+      background-color: #07C160;
+      color: white;
+    }
+    
+    .social-icon.qq {
+      background-color: #12B7F5;
+      color: white;
+    }
+    
+    .social-icon.weibo {
+      background-color: #E6162D;
+      color: white;
+    }
+    
+    .register-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .register-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 78, 138, 0.3);
+    }
+    
+    .register-btn:active {
+      transform: translateY(0);
+    }
+    
+    .invitation-code {
+      width: 100%;
+      max-width: 400px;
+      background-color: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-md);
+      animation: fadeIn 1.4s ease-out;
+    }
+    
+    .invitation-input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--divider);
+      font-size: 16px;
+      margin-bottom: var(--spacing-md);
+      transition: all 0.3s;
+    }
+    
+    .invitation-input:focus {
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 3px rgba(140, 82, 255, 0.1);
+      outline: none;
+    }
+    
+    .invitation-benefits {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 16px;
+    }
+    
+    .benefit-tag {
+      padding: 8px 16px;
+      background-color: rgba(140, 82, 255, 0.1);
+      color: var(--secondary-color);
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    
+    .benefit-tag .material-icons {
+      font-size: 14px;
+      margin-right: 4px;
+    }
+    
+    .benefit-tag:hover {
+      background-color: rgba(140, 82, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    /* 添加波浪背景 */
+    .wave-bg {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255, 78, 138, 0.05)" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+      background-size: cover;
+      z-index: -1;
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 480px) {
+      .register-form,
+      .invitation-code {
+        padding: var(--spacing-md);
+      }
+      
+      .app-title {
+        font-size: 24px;
+      }
+      
+      .verification-code-btn {
+        font-size: 12px;
+        padding: 6px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 波浪背景 -->
+  <div class="wave-bg"></div>
+  
+  <!-- 用户注册页面 -->
+  <div class="register-container">
+    <!-- 顶部Logo和标题 -->
+    <div class="register-header">
+      <img src="../images/logo.svg" class="app-logo" alt="音乐社交APP Logo">
+      <h1 class="app-title">音乐社交</h1>
+    </div>
+    
+    <!-- 注册表单 -->
+    <div class="register-form">
+      <div class="input-group">
+        <input type="text" placeholder="请输入用户名" required>
+        <span class="material-icons input-icon">person</span>
+      </div>
+      
+      <div class="input-group">
+        <input type="email" placeholder="请输入邮箱" required>
+        <span class="material-icons input-icon">email</span>
+      </div>
+      
+      <div class="input-group">
+        <input type="password" placeholder="请输入密码" required>
+        <span class="material-icons input-icon">lock</span>
+      </div>
+      
+      <div class="input-group">
+        <input type="password" placeholder="请确认密码" required>
+        <span class="material-icons input-icon">lock</span>
+      </div>
+      
+      <!-- 社交媒体快速登录 -->
+      <div class="social-login">
+        <p class="social-login-title">快速登录</p>
+        <div class="social-icons">
+          <div class="social-icon wechat">
+            <img src="../images/icons/wechat.svg" alt="微信登录">
+          </div>
+          <div class="social-icon qq">
+            <img src="../images/icons/qq.svg" alt="QQ登录">
+          </div>
+          <div class="social-icon weibo">
+            <img src="../images/icons/weibo.svg" alt="微博登录">
+          </div>
+        </div>
+      </div>
+      
+      <button class="register-btn">注册并探索音乐世界</button>
+    </div>
+    
+    <!-- 邀请码输入 -->
+    <div class="invitation-code">
+      <input type="text" placeholder="输入好友邀请码，获得音乐礼包" class="invitation-input">
+      <div class="invitation-benefits">
+        <span class="benefit-tag"><span class="material-icons">stars</span> 7天VIP</span>
+        <span class="benefit-tag"><span class="material-icons">local_offer</span> 专属音乐标签</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 添加内联脚本 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 表单提交处理
+      const registerBtn = document.querySelector('.register-btn');
+      if (registerBtn) {
+        registerBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          alert('注册功能即将上线，敬请期待！');
+        });
+      }
+      
+      // 社交登录处理
+      const socialIcons = document.querySelectorAll('.social-icon');
+      socialIcons.forEach(icon => {
+        icon.addEventListener('click', function() {
+          let platform = '';
+          if (this.classList.contains('wechat')) {
+            platform = '微信';
+          } else if (this.classList.contains('qq')) {
+            platform = 'QQ';
+          } else if (this.classList.contains('weibo')) {
+            platform = '微博';
+          }
+          alert(`${platform}登录功能即将上线，敬请期待！`);
+        });
+      });
+    });
+  </script>
+</body>
+</html> 

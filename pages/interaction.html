@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音乐社交 - 音乐笔记</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/enhanced-ui.css">
+  <link rel="stylesheet" href="../assets/css/iconfont.css">
+  <style>
+    /* Material Icons 字体声明 */
+    @font-face {
+      font-family: 'Material Icons';
+      font-style: normal;
+      font-weight: 400;
+      src: url('../assets/fonts/MaterialIcons-Regular.woff2') format('woff2'),
+           url('../assets/fonts/MaterialIcons-Regular.woff') format('woff'),
+           url('../assets/fonts/MaterialIcons-Regular.ttf') format('truetype');
+    }
+
+    .material-icons {
+      font-family: 'Material Icons';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: 'liga';
+    }
+    
+    /* 添加lyrics图标的备用方案 */
+    .material-icons.lyrics:before {
+      content: '\e333'; /* 使用text_format图标作为备用 */
+    }
+    
+    /* 阴影变量 */
+    :root {
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+      --player-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* 添加内联Font Awesome核心图标样式 */
+    .fas, .fa-solid {
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+    }
+    
+    /* 添加播放器控制图标 */
+    .fa-play:before { content: "\f04b"; }
+    .fa-pause:before { content: "\f04c"; }
+    .fa-step-backward:before, .fa-backward-step:before { content: "\f048"; }
+    .fa-step-forward:before, .fa-forward-step:before { content: "\f051"; }
+    .fa-random:before, .fa-shuffle:before { content: "\f074"; }
+    .fa-redo:before, .fa-repeat:before { content: "\f01e"; }
+    .fa-download:before { content: "\f019"; }
+    .fa-list:before { content: "\f03a"; }
+    .fa-music:before { content: "\f001"; }
+    .fa-share:before { content: "\f064"; }
+    
+    .interaction-container {
+      min-height: 100vh;
+      background-color: var(--background);
+      padding-bottom: 126px;
+    }
+    
+    /* 删除Font Awesome样式，使用iconfont替代 */
+    
+    /* 顶部导航栏 */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background-color: var(--background);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .back-btn i,
+    .back-btn .material-icons {
+      font-size: 20px;
+      color: var(--text-primary);
+    }
+    
+    .more-options i,
+    .more-options .material-icons {
+      font-size: 20px;
+      color: var(--text-primary);
+    }
+    
+    .note-detail {
+      background-color: var(--surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-top: 16px;
+    }
+    
+    .note-header {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid var(--divider);
+    }
+    
+    .back-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 50%;
+    }
+    
+    .back-btn:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: var(--primary-color);
+    }
+    
+    .detail-title {
+      flex: 1;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+    
+    .more-options {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 50%;
+    }
+    
+    .more-options:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: var(--primary-color);
+    }
+    
+    .author-info {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid var(--divider);
+    }
+    
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin-right: 12px;
+      object-fit: cover;
+    }
+    
+    .author-details {
+      flex: 1;
+    }
+    
+    .author-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 4px;
+    }
+    
+    .author-bio {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+    
+    .note-content-full {
+      padding: 16px;
+    }
+    
+    .note-text-full {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-color);
+      margin-bottom: 16px;
+    }
+    
+    .note-images-full {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .note-image-large {
+      width: calc(50% - 4px);
+      height: 180px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+    
+    .note-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .tag {
+      font-size: 14px;
+      color: var(--primary-color);
+      background-color: rgba(255, 78, 138, 0.1);
+      padding: 6px 12px;
+      border-radius: 16px;
+      transition: all 0.3s;
+    }
+    
+    .tag:hover {
+      background-color: rgba(255, 78, 138, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    /* 互动统计 */
+    .interaction-stats {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+      background: rgba(255, 255, 255, 0.8);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+    
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 4px 0;
+      min-width: 60px;
+      flex: 1;
+      position: relative;
+    }
+    
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 60%;
+      background-color: var(--divider);
+    }
+    
+    .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+    }
+    
+    .icon-container .material-icons {
+      font-size: 18px;
+      color: var(--text-light);
+      transition: all 0.3s;
+    }
+    
+    .stat-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 4px;
+    }
+    
+    .stat-count {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color);
+      line-height: 1.2;
+    }
+    
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-light);
+      margin-top: 1px;
+    }
+    
+    .stat-item:active {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    @media (hover: hover) {
+      .stat-item:hover {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+      
+      .stat-item:hover .material-icons {
+        color: var(--primary-color);
+        transform: scale(1.1);
+      }
+      
+      .stat-item:hover .stat-count {
+        color: var(--primary-color);
+      }
+    }
+
+    @media screen and (max-width: 360px) {
+      .interaction-stats {
+        padding: 8px 12px;
+      }
+      
+      .stat-item {
+        min-width: auto;
+        padding: 4px 2px;
+      }
+      
+      .stat-count {
+        font-size: 13px;
+      }
+      
+      .stat-label {
+        font-size: 10px;
+      }
+      
+      .stat-item .material-icons {
+        font-size: 16px;
+      }
+    }
+    
+    /* 评论区 */
+    .comments-section {
+      padding: 16px;
+    }
+    
+    .comment-input {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      background-color: var(--divider);
+      border-radius: 24px;
+      padding: 8px;
+    }
+    
+    .comment-user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    
+    .comment-text-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 8px;
+      font-size: 14px;
+      color: var(--text-color);
+    }
+    
+    .comment-text-input:focus {
+      outline: none;
+    }
+    
+    .emoji-btn, .send-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 50%;
+    }
+    
+    .emoji-btn:hover, .send-btn:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: var(--primary-color);
+    }
+    
+    .comments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .comment-item {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .commenter-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    
+    .comment-content {
+      flex: 1;
+    }
+    
+    .commenter-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 4px;
+    }
+    
+    .comment-text {
+      font-size: 14px;
+      color: var(--text-color);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    
+    .comment-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    
+    .comment-time {
+      font-size: 12px;
+      color: var(--text-lighter);
+    }
+    
+    .comment-like {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    
+    .comment-like i {
+      font-size: 12px;
+      color: var(--text-lighter);
+    }
+    
+    .comment-like:hover i {
+      color: var(--primary-color);
+    }
+    
+    .like-count {
+      font-size: 12px;
+      color: var(--text-lighter);
+    }
+    
+    .reply-btn {
+      font-size: 12px;
+      color: var(--text-lighter);
+      cursor: pointer;
+    }
+    
+    .reply-btn:hover {
+      color: var(--primary-color);
+    }
+    
+    .replies {
+      margin-left: 20px;
+      margin-top: 12px;
+    }
+    
+    .reply-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .replier-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    
+    .reply-content {
+      flex: 1;
+    }
+    
+    .replier-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 4px;
+    }
+    
+    .reply-text {
+      font-size: 14px;
+      color: var(--text-color);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    
+    .reply-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .reply-time {
+      font-size: 12px;
+      color: var(--text-lighter);
+    }
+    
+    .reply-like {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    
+    .reply-like i {
+      font-size: 12px;
+      color: var(--text-lighter);
+    }
+    
+    .reply-like:hover i {
+      color: var(--primary-color);
+    }
+    
+    /* 音乐播放器 */
+    .music-player {
+      background-color: var(--divider);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .song-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .song-cover-large {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      margin-right: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+    }
+    
+    .song-details {
+      flex: 1;
+    }
+    
+    .song-name-large {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 4px;
+    }
+    
+    .song-artist-large {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-bottom: 4px;
+    }
+    
+    .song-album {
+      font-size: 12px;
+      color: var(--text-lighter);
+    }
+    
+    /* 播放器控制样式 */
+    .control-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin: 16px 0;
+    }
+    
+    .control-buttons button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+      color: var(--text-color);
+      transition: all 0.3s;
+    }
+    
+    .control-buttons .material-icons {
+      font-size: 24px;
+    }
+    
+    .play-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: white !important;
+      box-shadow: 0 4px 12px rgba(255, 78, 138, 0.3);
+    }
+    
+    .play-btn .material-icons {
+      font-size: 32px;
+    }
+    
+    .play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(255, 78, 138, 0.4);
+    }
+    
+    .shuffle-btn, .repeat-btn {
+      color: var(--text-light) !important;
+    }
+    
+    .shuffle-btn:hover, .repeat-btn:hover,
+    .prev-btn:hover, .next-btn:hover {
+      color: var(--primary-color) !important;
+      transform: scale(1.1);
+    }
+    
+    /* 播放状态样式 */
+    .play-btn.playing {
+      background-image: none !important; /* 覆盖styles.css中的背景图片 */
+      background-color: var(--primary-dark) !important; /* 使用深色增加对比度 */
+    }
+    
+    /* 使用更具体的选择器确保覆盖伪元素 */
+    .mini-play-btn.playing span i::before,
+    .play-btn.playing span i::before {
+      content: '\f04c' !important; /* 暂停图标 */
+    }
+    
+    .mini-play-btn.playing {
+      background-image: none !important; /* 覆盖任何可能的背景图片 */
+      background-color: var(--primary-dark) !important; /* 使用深色增加对比度 */
+    }
+    
+    /* 播放器操作区样式 - 覆盖styles.css中的样式 */
+    .player-actions {
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+    }
+    
+    .player-actions .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 48px;
+      flex: 1;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .player-actions .action-btn .material-icons {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 24px;
+      font-size: 22px;
+      color: var(--text-light);
+      transition: all 0.3s;
+    }
+    
+    .player-actions .action-btn span:not(.material-icons) {
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.2;
+      color: var(--text-light);
+    }
+    
+    .player-actions .action-btn:hover .material-icons {
+      color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+    
+    /* 底部播放器 */
+    .bottom-player {
+      position: fixed;
+      bottom: 56px; /* 底部导航栏的高度 */
+      left: 0;
+      right: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      height: 64px; /* 固定高度 */
+      box-sizing: border-box; /* 确保padding不会增加元素高度 */
+    }
+    
+    .mini-player {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      position: relative; /* 添加相对定位 */
+    }
+    
+    .mini-cover {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+      margin-right: 12px;
+      flex-shrink: 0; /* 防止图片被压缩 */
+    }
+    
+    .mini-cover:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .mini-info {
+      flex: 1;
+      overflow: hidden;
+      min-width: 0; /* 确保文本可以正确截断 */
+      margin-right: 12px; /* 与控制按钮保持距离 */
+    }
+    
+    .mini-song-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .mini-artist {
+      font-size: 12px;
+      color: var(--text-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    /* 迷你播放器控制样式 */
+    .mini-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-left: auto;
+      padding-right: 8px;
+    }
+    
+    .mini-controls button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s;
+    }
+    
+    .mini-play-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: white;
+      box-shadow: 0 2px 8px rgba(255, 78, 138, 0.3);
+    }
+    
+    .mini-play-btn .material-icons {
+      font-size: 28px;
+    }
+    
+    .mini-next-btn, .mini-playlist-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.05);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .mini-next-btn .material-icons,
+    .mini-playlist-btn .material-icons {
+      font-size: 24px;
+      color: var(--text-color);
+    }
+    
+    .mini-play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(255, 78, 138, 0.4);
+    }
+    
+    .mini-next-btn:hover,
+    .mini-playlist-btn:hover {
+      transform: scale(1.1);
+      background-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* 底部导航 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0 8px;
+      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.05);
+      z-index: 101;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      height: 56px; /* 固定高度 */
+      box-sizing: border-box; /* 确保padding不会增加元素高度 */
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-lighter);
+      font-size: 12px;
+      transition: all 0.3s;
+      padding: 6px 12px;
+      border-radius: 16px;
+      text-align: center;
+      width: 25%; /* 确保每个导航项宽度相等 */
+    }
+    
+    .nav-item i,
+    .nav-item .material-icons {
+      font-size: 20px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      width: 24px;
+      height: 24px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative; /* 添加相对定位 */
+      left: 0; /* 确保没有偏移 */
+    }
+    
+    .nav-text {
+      display: block;
+      width: 100%;
+      text-align: center;
+      line-height: 1.2;
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+      background-color: rgba(255, 78, 138, 0.08);
+    }
+    
+    .nav-item:hover {
+      color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <!-- 内容互动页面 -->
+  <div class="interaction-container">
+    <!-- 音乐笔记详情 -->
+    <div class="note-detail">
+      <div class="note-header">
+        <div class="back-btn"><span class="material-icons">arrow_back</span></div>
+        <h2 class="detail-title">音乐笔记</h2>
+        <div class="more-options"><span class="material-icons">more_vert</span></div>
+      </div>
+      
+      <div class="author-info">
+        <img src="../images/user2.svg" class="author-avatar">
+        <div class="author-details">
+          <div class="author-name">音乐小天使</div>
+          <div class="author-bio">分享生活中的音乐时刻</div>
+        </div>
+        <div class="follow-btn followed">已关注</div>
+      </div>
+      
+      <div class="note-content-full">
+        <p class="note-text-full">这首歌太治愈了！最近压力好大，听完整个人都放松了，推荐给大家～这是我最近的心情良药，每天循环听至少3次，效果超级好！你们有没有这种一听就能让心情变好的歌呢？</p>
+        
+        <!-- 音乐播放器 (QQ音乐风格) -->
+        <div class="music-player">
+          <div class="song-info">
+            <img src="../images/song1.svg" class="song-cover-large">
+            <div class="song-details">
+              <div class="song-name-large">Daylight</div>
+              <div class="song-artist-large">Taylor Swift</div>
+              <div class="song-album">Lover</div>
+            </div>
+          </div>
+          
+          <div class="player-controls">
+            <div class="progress-bar">
+              <div class="progress-current" style="width: 45%"></div>
+              <div class="progress-handle"></div>
+            </div>
+            <div class="time-info">
+              <span class="current-time">01:45</span>
+              <span class="total-time">03:50</span>
+            </div>
+            <div class="control-buttons">
+              <button class="shuffle-btn">
+                <span class="material-icons">shuffle</span>
+              </button>
+              <button class="prev-btn">
+                <span class="material-icons">skip_previous</span>
+              </button>
+              <button class="play-btn">
+                <span class="material-icons">play_arrow</span>
+              </button>
+              <button class="next-btn">
+                <span class="material-icons">skip_next</span>
+              </button>
+              <button class="repeat-btn">
+                <span class="material-icons">repeat</span>
+              </button>
+            </div>
+          </div>
+          
+          <div class="player-actions">
+            <div class="action-btn">
+              <span class="material-icons">file_download</span>
+              <span>下载</span>
+            </div>
+            <div class="action-btn">
+              <span class="material-icons">queue_music</span>
+              <span>播放列表</span>
+            </div>
+            <div class="action-btn">
+              <span class="material-icons">text_format</span>
+              <span>歌词</span>
+            </div>
+            <div class="action-btn">
+              <span class="material-icons">share</span>
+              <span>分享</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="note-images-full">
+          <img src="../images/song2.svg" class="note-image-large">
+          <img src="../images/song3.svg" class="note-image-large">
+        </div>
+        
+        <div class="note-tags">
+          <div class="tag">#治愈系音乐</div>
+          <div class="tag">#减压歌单</div>
+          <div class="tag">#Taylor Swift</div>
+        </div>
+      </div>
+      
+      <!-- 互动统计 -->
+      <div class="interaction-stats">
+        <div class="stat-item">
+          <div class="icon-container">
+            <span class="material-icons">call</span>
+          </div>
+          <div class="stat-info">
+            <span class="stat-count">2.3万</span>
+            <span class="stat-label">播放</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="icon-container">
+            <span class="material-icons">favorite</span>
+          </div>
+          <div class="stat-info">
+            <span class="stat-count">1.5万</span>
+            <span class="stat-label">点赞</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="icon-container">
+            <span class="material-icons">chat_bubble</span>
+          </div>
+          <div class="stat-info">
+            <span class="stat-count">328</span>
+            <span class="stat-label">评论</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="icon-container">
+            <span class="material-icons">share</span>
+          </div>
+          <div class="stat-info">
+            <span class="stat-count">156</span>
+            <span class="stat-label">分享</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 评论区 -->
+      <div class="comments-section">
+        <div class="comment-input">
+          <img src="../images/user-avatar.svg" class="comment-user-avatar">
+          <input type="text" placeholder="分享你的感受..." class="comment-text-input">
+          <div class="emoji-btn">
+            <span class="material-icons">sentiment_satisfied_alt</span>
+          </div>
+          <div class="send-btn">
+            <span class="material-icons">send</span>
+          </div>
+        </div>
+        
+        <div class="comments-list">
+          <div class="comment-item">
+            <img src="../images/user1.svg" class="commenter-avatar">
+            <div class="comment-content">
+              <div class="commenter-name">音乐达人</div>
+              <div class="comment-text">我也超爱这首歌！每次心情不好的时候听都能瞬间好起来～</div>
+              <div class="comment-actions">
+                <span class="comment-time">2小时前</span>
+                <div class="comment-like">
+                  <span class="material-icons">favorite_border</span>
+                  <span class="like-count">42</span>
+                </div>
+                <span class="reply-btn">回复</span>
+              </div>
+              
+              <!-- 回复区 -->
+              <div class="replies">
+                <div class="reply-item">
+                  <img src="../images/user2.svg" class="replier-avatar">
+                  <div class="reply-content">
+                    <div class="replier-name">音乐小天使</div>
+                    <div class="reply-text">是的！Taylor的歌真的太治愈了～</div>
+                    <div class="reply-actions">
+                      <span class="reply-time">1小时前</span>
+                      <div class="reply-like">
+                        <span class="material-icons">favorite_border</span>
+                        <span class="like-count">12</span>
+                      </div>
+                      <span class="reply-btn">回复</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 第二条评论 -->
+          <div class="comment-item">
+            <img src="../images/user3.svg" class="commenter-avatar">
+            <div class="comment-content">
+              <div class="commenter-name">流行音乐控</div>
+              <div class="comment-text">推荐大家也听听她的新专辑，每首都很棒！特别是《Lover》</div>
+              <div class="comment-actions">
+                <span class="comment-time">5小时前</span>
+                <div class="comment-like">
+                  <span class="material-icons">favorite_border</span>
+                  <span class="like-count">28</span>
+                </div>
+                <span class="reply-btn">回复</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部播放控件 (QQ音乐风格) -->
+  <div class="bottom-player">
+    <div class="mini-player">
+      <img src="../images/song1.svg" class="mini-cover">
+      <div class="mini-info">
+        <div class="mini-song-name">Daylight</div>
+        <div class="mini-artist">Taylor Swift</div>
+      </div>
+      <div class="mini-controls">
+        <button class="mini-play-btn playing">
+          <span class="material-icons">pause</span>
+        </button>
+        <button class="mini-next-btn">
+          <span class="material-icons">skip_next</span>
+        </button>
+        <button class="mini-playlist-btn">
+          <span class="material-icons">queue_music</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 底部导航 -->
+  <div class="bottom-nav">
+    <div class="nav-item">
+      <span class="material-icons">home</span>
+      <span class="nav-text">首页</span>
+    </div>
+    <div class="nav-item">
+      <span class="material-icons">explore</span>
+      <span class="nav-text">发现</span>
+    </div>
+    <div class="nav-item">
+      <span class="material-icons">person</span>
+      <span class="nav-text">社交</span>
+    </div>
+    <div class="nav-item active">
+      <span class="material-icons">groups</span>
+      <span class="nav-text">社区</span>
+    </div>
+  </div>
+</body>
+</html> 

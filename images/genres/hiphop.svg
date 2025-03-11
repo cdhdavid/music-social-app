@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="hiphopGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8C52FF;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#5E17EB;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <rect width="200" height="200" fill="url(#hiphopGradient)"/>
+    <g transform="translate(40, 40)">
+        <circle cx="60" cy="40" r="30" fill="#FFFFFF" fill-opacity="0.3"/>
+        <rect x="30" y="80" width="60" height="10" rx="5" fill="#FFFFFF"/>
+        <rect x="30" y="100" width="60" height="10" rx="5" fill="#FFFFFF"/>
+        <rect x="30" y="120" width="60" height="10" rx="5" fill="#FFFFFF"/>
+        <path d="M60,20 C71.0457,20 80,28.9543 80,40 C80,51.0457 71.0457,60 60,60 C48.9543,60 40,51.0457 40,40 C40,28.9543 48.9543,20 60,20 Z" fill="#FFFFFF" fill-opacity="0.5"/>
+        <path d="M60,30 C65.5228,30 70,34.4772 70,40 C70,45.5228 65.5228,50 60,50 C54.4772,50 50,45.5228 50,40 C50,34.4772 54.4772,30 60,30 Z" fill="#FFFFFF"/>
+    </g>
+    <text x="100" y="170" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">嘻哈音乐</text>
+</svg> 

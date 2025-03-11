@@ -1,0 +1,188 @@
+/* 设备框架样式 - 基于iPhone 16规格 */
+
+/* 手机设备框架 */
+.device-container {
+  position: relative;
+  width: 393px;
+  margin: 20px auto;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.device-container:hover {
+  /* 移除悬停效果 */
+}
+
+.device-frame {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  background: #111;
+  border-radius: 48px;
+  padding: 10px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  overflow: hidden;
+  transform: rotateY(0deg) rotateX(0deg);
+  transition: transform 0.5s ease;
+}
+
+.device-frame:hover {
+  transform: rotateY(0deg) rotateX(0deg);
+}
+
+.device-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 38px;
+  overflow: hidden;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.device-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 36px;
+  background: #111;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  z-index: 10;
+}
+
+.device-buttons {
+  position: absolute;
+  top: 120px;
+  right: -5px;
+  width: 3px;
+  height: 70px;
+  background: #222;
+  border-radius: 2px;
+}
+
+.device-buttons:before {
+  content: '';
+  position: absolute;
+  top: -90px;
+  right: 0;
+  width: 3px;
+  height: 50px;
+  background: #222;
+  border-radius: 2px;
+}
+
+.device-power-btn {
+  position: absolute;
+  top: 200px;
+  left: -5px;
+  width: 3px;
+  height: 50px;
+  background: #222;
+  border-radius: 2px;
+}
+
+.device-home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 5px;
+  background: #333;
+  border-radius: 3px;
+  z-index: 10;
+}
+
+/* 设备内容 */
+.device-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.device-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* 设备标签 */
+.device-label {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .device-container {
+    width: 100%;
+    transform: scale(0.8);
+    margin: 20px auto;
+  }
+  
+  .device-frame {
+    width: 320px;
+    height: 690px;
+    border-radius: 36px;
+  }
+  
+  .device-screen {
+    border-radius: 28px;
+  }
+  
+  .device-notch {
+    width: 120px;
+    height: 30px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .device-container {
+    transform: scale(0.7);
+    margin: 0 auto;
+  }
+}
+
+/* 页面特定样式 */
+.device-register .device-content,
+.device-interest .device-content,
+.device-profile .device-content,
+.device-home .device-content,
+.device-interaction .device-content,
+.device-social .device-content,
+.device-community .device-content {
+  background-color: #f8f8f8;
+}
+
+/* 设备框架颜色变体 */
+.device-primary {
+  background: linear-gradient(135deg, #ff4e8a, #ff6b6b);
+}
+
+.device-secondary {
+  background: linear-gradient(135deg, #8c52ff, #5e17eb);
+}
+
+.device-neutral {
+  background: #333;
+}
+
+/* 设备旋转动画 */
+@keyframes device-rotate {
+  0% { transform: rotateY(0deg) rotateX(0deg); }
+  50% { transform: rotateY(-10deg) rotateX(5deg); }
+  100% { transform: rotateY(0deg) rotateX(0deg); }
+}
+
+.device-animate {
+  animation: device-rotate 5s infinite ease-in-out;
+} 

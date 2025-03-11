@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="classicalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#4A6FA5;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#23395B;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <rect width="200" height="200" fill="url(#classicalGradient)"/>
+    <g transform="translate(50, 30)">
+        <path d="M50,0 L100,50 L50,100 L0,50 L50,0 Z" fill="#FFFFFF" fill-opacity="0.2"/>
+        <circle cx="50" cy="50" r="30" fill="#FFFFFF" fill-opacity="0.3"/>
+        <path d="M50,30 C61.0457,30 70,38.9543 70,50 C70,61.0457 61.0457,70 50,70 C38.9543,70 30,61.0457 30,50 C30,38.9543 38.9543,30 50,30 Z" fill="#FFFFFF"/>
+        <path d="M35,50 L65,50 L50,75 L35,50 Z" fill="url(#classicalGradient)"/>
+        <path d="M35,50 L65,50 L50,25 L35,50 Z" fill="url(#classicalGradient)"/>
+        <path d="M50,110 L60,90 L40,90 L50,110 Z" fill="#FFFFFF" fill-opacity="0.5"/>
+        <path d="M50,120 L55,110 L45,110 L50,120 Z" fill="#FFFFFF" fill-opacity="0.5"/>
+    </g>
+    <text x="100" y="170" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">古典音乐</text>
+</svg> 

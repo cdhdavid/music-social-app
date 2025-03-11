@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音乐社交 - 兴趣选择</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/enhanced-ui.css">
+  <link rel="stylesheet" href="../assets/css/iconfont.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .interest-container {
+      min-height: 100vh;
+      background-color: var(--background);
+      padding: 20px;
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    .interest-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .app-logo {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 16px;
+      display: block;
+      animation: pulse 2s infinite;
+      transition: transform 0.3s;
+    }
+    
+    .app-logo:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+    
+    .interest-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 8px;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      text-shadow: 0 2px 10px rgba(255, 78, 138, 0.2);
+    }
+    
+    .interest-subtitle {
+      font-size: 16px;
+      color: var(--text-light);
+      margin-bottom: 24px;
+    }
+    
+    .progress-bar {
+      height: 6px;
+      background-color: var(--divider);
+      border-radius: 3px;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 40%;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .section-title .material-icons {
+      margin-right: 8px;
+      color: var(--primary-color);
+      font-size: 24px;
+    }
+    
+    /* ===== 音乐风格样式开始 ===== */
+    .interest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+    
+    .interest-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .interest-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .interest-item.selected {
+      box-shadow: 0 0 0 3px var(--primary-color), 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .interest-item.selected::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      animation: scaleIn 0.3s ease-out;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+      background-size: 16px 16px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    .interest-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.5s;
+    }
+    
+    .interest-item:hover .interest-image {
+      transform: scale(1.1);
+    }
+    
+    .interest-name {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    /* ===== 音乐风格样式结束 ===== */
+    
+    /* ===== 艺术家样式开始 ===== */
+    .artist-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+    
+    .artist-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .artist-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .artist-item.selected {
+      box-shadow: 0 0 0 3px var(--primary-color), 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .artist-item.selected::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      animation: scaleIn 0.3s ease-out;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+      background-size: 16px 16px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    .artist-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.5s;
+    }
+    
+    .artist-item:hover .artist-image {
+      transform: scale(1.1);
+    }
+    
+    .artist-name {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    /* ===== 艺术家样式结束 ===== */
+    
+    .action-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+    
+    .skip-btn {
+      padding: 12px 24px;
+      border-radius: 24px;
+      background-color: transparent;
+      border: 1px solid var(--divider);
+      color: var(--text-light);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .skip-btn:hover {
+      background-color: var(--divider);
+      color: var(--text-color);
+    }
+    
+    .next-btn {
+      padding: 12px 36px;
+      border-radius: 24px;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(255, 78, 138, 0.3);
+      display: flex;
+      align-items: center;
+    }
+    
+    .next-btn i {
+      margin-left: 8px;
+    }
+    
+    .next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 78, 138, 0.4);
+    }
+    
+    .next-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 8px rgba(255, 78, 138, 0.3);
+    }
+    
+    .selection-count {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background-color: var(--surface);
+      color: var(--text-color);
+      padding: 8px;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+    }
+    
+    .selection-count .material-icons {
+      color: var(--primary-color);
+      font-size: 20px;
+    }
+    
+    /* 添加动画 */
+    @keyframes scaleIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 480px) {
+      .interest-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .artist-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="interest-container">
+    <div class="selection-count">
+      <span class="material-icons">check_circle</span>
+    </div>
+    
+    <div class="interest-header">
+      <img src="../images/logo.svg" class="app-logo">
+      <h1 class="interest-title">选择你的音乐偏好</h1>
+      <p class="interest-subtitle">帮助我们了解你的音乐品味，为你推荐更合适的内容</p>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+    
+    <h2 class="section-title">
+      <span class="material-icons">music_note</span>
+      音乐风格
+    </h2>
+    <div class="interest-grid">
+      <div class="interest-item selected">
+        <img src="../images/real/genres/pop.jpg" class="interest-image">
+        <div class="interest-name">流行</div>
+      </div>
+      <div class="interest-item">
+        <img src="../images/real/genres/rock.jpg" class="interest-image">
+        <div class="interest-name">摇滚</div>
+      </div>
+      <div class="interest-item selected">
+        <img src="../images/real/genres/hip-hop.jpg" class="interest-image">
+        <div class="interest-name">嘻哈</div>
+      </div>
+      <div class="interest-item">
+        <img src="../images/real/genres/electronic.jpg" class="interest-image">
+        <div class="interest-name">电子</div>
+      </div>
+      <div class="interest-item selected">
+        <img src="../images/real/genres/folk.jpg" class="interest-image">
+        <div class="interest-name">民谣</div>
+      </div>
+      <div class="interest-item">
+        <img src="../images/real/genres/classical.jpg" class="interest-image">
+        <div class="interest-name">古典</div>
+      </div>
+    </div>
+    
+    <h2 class="section-title">
+      <span class="material-icons">music_note</span>
+      喜欢的艺术家
+    </h2>
+    <div class="artist-grid">
+      <div class="artist-item">
+        <img src="../images/real/artists/jay.jpg" class="artist-image">
+        <div class="artist-name">周杰伦</div>
+      </div>
+      <div class="artist-item selected">
+        <img src="../images/real/artists/taylor.jpg" class="artist-image">
+        <div class="artist-name">Taylor Swift</div>
+      </div>
+      <div class="artist-item">
+        <img src="../images/real/artists/chen.jpg" class="artist-image">
+        <div class="artist-name">陈奕迅</div>
+      </div>
+      <div class="artist-item">
+        <img src="../images/real/artists/lin.jpg" class="artist-image">
+        <div class="artist-name">林俊杰</div>
+      </div>
+      <div class="artist-item selected">
+        <img src="../images/real/artists/billie.jpg" class="artist-image">
+        <div class="artist-name">Billie Eilish</div>
+      </div>
+      <div class="artist-item">
+        <img src="../images/real/artists/hua.jpg" class="artist-image">
+        <div class="artist-name">华晨宇</div>
+      </div>
+      <div class="artist-item">
+        <img src="../images/real/artists/deng.jpg" class="artist-image">
+        <div class="artist-name">邓紫棋</div>
+      </div>
+      <div class="artist-item">
+        <img src="../images/real/artists/ed.jpg" class="artist-image">
+        <div class="artist-name">Ed Sheeran</div>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button class="skip-btn">跳过</button>
+      <div class="step-actions">
+        <button class="next-btn">
+          <span class="material-icons">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 兴趣选择交互
+      const interestItems = document.querySelectorAll('.interest-item');
+      const artistItems = document.querySelectorAll('.artist-item');
+      const selectionCountEl = document.querySelector('.selection-count .material-icons');
+      
+      function updateSelectionCount() {
+        const selectedCount = document.querySelectorAll('.interest-item.selected, .artist-item.selected').length;
+        
+        // 根据选择数量更新图标
+        if (selectedCount >= 5) {
+          selectionCountEl.textContent = 'verified';
+        } else if (selectedCount > 0) {
+          selectionCountEl.textContent = 'check_circle';
+        } else {
+          selectionCountEl.textContent = 'radio_button_unchecked';
+        }
+      }
+      
+      interestItems.forEach(item => {
+        item.addEventListener('click', function() {
+          this.classList.toggle('selected');
+          updateSelectionCount();
+        });
+      });
+      
+      artistItems.forEach(item => {
+        item.addEventListener('click', function() {
+          this.classList.toggle('selected');
+          updateSelectionCount();
+        });
+      });
+      
+      // 初始化选择计数
+      updateSelectionCount();
+    });
+  </script>
+</body>
+</html> 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="popGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FF4E8A;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#FF9A8B;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <rect width="200" height="200" fill="url(#popGradient)"/>
+    <g transform="translate(40, 40)">
+        <circle cx="60" cy="60" r="50" fill="#FFFFFF" fill-opacity="0.2"/>
+        <path d="M60,30 C77.6731,30 92,44.3269 92,62 C92,79.6731 77.6731,94 60,94 C42.3269,94 28,79.6731 28,62 C28,44.3269 42.3269,30 60,30 Z M60,40 C47.8497,40 38,49.8497 38,62 C38,74.1503 47.8497,84 60,84 C72.1503,84 82,74.1503 82,62 C82,49.8497 72.1503,40 60,40 Z" fill="#FFFFFF"/>
+        <path d="M60,50 C66.6274,50 72,55.3726 72,62 C72,68.6274 66.6274,74 60,74 C53.3726,74 48,68.6274 48,62 C48,55.3726 53.3726,50 60,50 Z" fill="#FFFFFF"/>
+        <path d="M60,55 C63.866,55 67,58.134 67,62 C67,65.866 63.866,69 60,69 C56.134,69 53,65.866 53,62 C53,58.134 56.134,55 60,55 Z" fill="url(#popGradient)"/>
+    </g>
+    <text x="100" y="170" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">流行音乐</text>
+</svg> 

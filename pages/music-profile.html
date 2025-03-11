@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音乐社交 - 音乐画像</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/enhanced-ui.css">
+  <link rel="stylesheet" href="../assets/css/iconfont.css">
+  <style>
+    .music-profile-container {
+      min-height: 100vh;
+      background-color: var(--background);
+      padding: var(--spacing-md);
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    /* 生成中状态 */
+    .profile-generating {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      text-align: center;
+      padding: var(--spacing-xl);
+    }
+    
+    .loading-animation {
+      margin-bottom: var(--spacing-xl);
+      position: relative;
+    }
+    
+    .music-note-animation {
+      animation: pulse 2s infinite;
+    }
+    
+    .generating-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: var(--spacing-md);
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    
+    .generating-subtitle {
+      font-size: 16px;
+      color: var(--text-light);
+      max-width: 400px;
+      line-height: 1.6;
+    }
+    
+    /* 画像结果 */
+    .profile-result {
+      display: flex;
+      justify-content: center;
+      padding: var(--spacing-md);
+    }
+    
+    .profile-card {
+      background-color: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: var(--spacing-xl);
+      width: 100%;
+      max-width: 500px;
+      animation: fadeIn 1s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    .profile-header {
+      text-align: center;
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .profile-title {
+      font-size: 18px;
+      color: var(--text-light);
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .profile-type {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      margin-bottom: var(--spacing-md);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .profile-type::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: 2px;
+    }
+    
+    .profile-traits {
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .trait-item {
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .trait-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-color);
+      margin-bottom: var(--spacing-xs);
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .trait-bar {
+      height: 8px;
+      background-color: var(--divider);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .trait-value {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: 4px;
+      transition: width 1.5s ease-out;
+    }
+    
+    .signature-songs {
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .signature-title, .similar-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: var(--spacing-md);
+      position: relative;
+      padding-left: var(--spacing-sm);
+      letter-spacing: 0.5px;
+    }
+    
+    .signature-title::before, .similar-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 18px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .song-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    
+    .song-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      background-color: rgba(0, 0, 0, 0.02);
+      border-radius: 12px;
+      transition: all 0.3s;
+      margin-bottom: 8px;
+      border: 1px solid var(--divider);
+    }
+    
+    .song-item:hover {
+      transform: translateY(-2px);
+      background-color: rgba(255, 78, 138, 0.05);
+      border-color: rgba(255, 78, 138, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    .song-cover {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      margin-right: 8px;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+    }
+    
+    .song-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0;
+      margin-left: 0;
+      align-items: flex-start;
+      min-width: 0;
+    }
+    
+    .song-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+      width: 100%;
+      padding-right: 8px;
+    }
+    
+    .song-artist {
+      font-size: 12px;
+      color: var(--text-lighter);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+      width: 100%;
+      padding-right: 8px;
+    }
+    
+    .play-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(255, 78, 138, 0.3);
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    
+    .play-btn::before {
+      content: none;
+    }
+    
+    .play-btn i,
+    .play-btn .material-icons {
+      color: white;
+      font-size: 14px;
+    }
+    
+    .play-btn:hover {
+      transform: scale(1.1);
+      background-color: var(--primary-dark);
+    }
+    
+    .similar-users {
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .user-avatars {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+      flex-wrap: wrap;
+    }
+    
+    .user-avatar {
+      position: relative;
+      transition: all 0.3s;
+    }
+    
+    .user-avatar img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s;
+    }
+    
+    .user-avatar:hover img {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .match-rate {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .follow-all-btn {
+      width: 100%;
+      padding: var(--spacing-sm);
+      border-radius: var(--radius-md);
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .follow-all-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .share-profile {
+      text-align: center;
+    }
+    
+    .share-btn {
+      padding: var(--spacing-sm) var(--spacing-lg);
+      border-radius: var(--radius-md);
+      background: linear-gradient(90deg, var(--secondary-color), var(--secondary-light));
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(140, 82, 255, 0.3);
+    }
+    
+    .share-tip {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+    
+    /* 显示控制 - 默认显示结果，隐藏生成中 */
+    .profile-generating {
+      display: none;
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 480px) {
+      .profile-card {
+        padding: var(--spacing-md);
+      }
+      
+      .profile-type {
+        font-size: 28px;
+      }
+      
+      .user-avatar img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 音乐画像生成页面 -->
+  <div class="music-profile-container">
+    <div class="profile-generating">
+      <div class="loading-animation">
+        <div class="music-note-animation"><i class="iconfont icon-music icon-bounce" style="color: var(--primary-color); font-size: 2em;"></i></div>
+      </div>
+      <h2 class="generating-title">正在生成你的音乐画像...</h2>
+      <p class="generating-subtitle">基于你的选择，我们正在寻找与你音乐品味相似的用户</p>
+    </div>
+    
+    <!-- 音乐画像结果 -->
+    <div class="profile-result">
+      <div class="profile-card">
+        <div class="profile-header">
+          <h2 class="profile-title">你的音乐性格是</h2>
+          <div class="profile-type">浪漫主义者</div>
+        </div>
+        
+        <div class="profile-traits">
+          <div class="trait-item">
+            <div class="trait-name">流行</div>
+            <div class="trait-bar">
+              <div class="trait-value" style="width: 85%"></div>
+            </div>
+          </div>
+          <div class="trait-item">
+            <div class="trait-name">民谣</div>
+            <div class="trait-bar">
+              <div class="trait-value" style="width: 65%"></div>
+            </div>
+          </div>
+          <div class="trait-item">
+            <div class="trait-name">电子</div>
+            <div class="trait-bar">
+              <div class="trait-value" style="width: 45%"></div>
+            </div>
+          </div>
+          <div class="trait-item">
+            <div class="trait-name">摇滚</div>
+            <div class="trait-bar">
+              <div class="trait-value" style="width: 30%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="signature-songs">
+          <h3 class="signature-title">你的代表歌曲</h3>
+          <div class="song-list">
+            <div class="song-item">
+              <img src="../images/song1.svg" class="song-cover">
+              <div class="song-info">
+                <div class="song-name">晴天</div>
+                <div class="song-artist">周杰伦</div>
+              </div>
+              <div class="play-btn">
+                <span class="material-icons" style="color: white;">play_arrow</span>
+              </div>
+            </div>
+            <div class="song-item">
+              <img src="../images/song2.svg" class="song-cover">
+              <div class="song-info">
+                <div class="song-name">七里香</div>
+                <div class="song-artist">周杰伦</div>
+              </div>
+              <div class="play-btn">
+                <span class="material-icons" style="color: white;">play_arrow</span>
+              </div>
+            </div>
+            <div class="song-item">
+              <img src="../images/song3.svg" class="song-cover">
+              <div class="song-info">
+                <div class="song-name">等你下课</div>
+                <div class="song-artist">周杰伦</div>
+              </div>
+              <div class="play-btn">
+                <span class="material-icons" style="color: white;">play_arrow</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="similar-users">
+          <h3 class="similar-title">与你音乐品味相似的用户</h3>
+          <div class="user-avatars">
+            <div class="user-avatar">
+              <img src="../images/user1.svg">
+              <div class="match-rate">92%</div>
+            </div>
+            <div class="user-avatar">
+              <img src="../images/user2.svg">
+              <div class="match-rate">87%</div>
+            </div>
+            <div class="user-avatar">
+              <img src="../images/user3.svg">
+              <div class="match-rate">85%</div>
+            </div>
+            <div class="user-avatar">
+              <img src="../images/user-avatar.svg">
+              <div class="match-rate">80%</div>
+            </div>
+          </div>
+          <button class="follow-all-btn">一键关注</button>
+        </div>
+        
+        <div class="share-profile">
+          <button class="share-btn">分享我的音乐画像</button>
+          <p class="share-tip">分享到朋友圈，邀请好友来测试匹配度</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 模拟加载过程
+      setTimeout(function() {
+        document.querySelector('.profile-generating').style.display = 'none';
+        document.querySelector('.profile-result').style.display = 'flex';
+        
+        // 动画效果：逐个显示特征条
+        const traitValues = document.querySelectorAll('.trait-value');
+        traitValues.forEach((trait, index) => {
+          setTimeout(() => {
+            trait.style.width = trait.style.width;
+          }, 300 * index);
+        });
+      }, 1500);
+    });
+  </script>
+</body>
+</html> 

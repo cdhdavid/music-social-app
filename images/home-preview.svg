@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f6f6f6" />
+      <stop offset="100%" stop-color="#e9e9e9" />
+    </linearGradient>
+    <linearGradient id="card-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f9f9f9" />
+    </linearGradient>
+    <linearGradient id="cover-gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9a9e" />
+      <stop offset="100%" stop-color="#fad0c4" />
+    </linearGradient>
+    <linearGradient id="cover-gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a18cd1" />
+      <stop offset="100%" stop-color="#fbc2eb" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="200" fill="url(#bg-gradient)" />
+  
+  <!-- Tabs -->
+  <rect x="0" y="20" width="400" height="30" fill="white" />
+  <text x="50" y="40" font-family="Arial" font-size="12" font-weight="bold" fill="#ff4e8a">推荐</text>
+  <text x="100" y="40" font-family="Arial" font-size="12" fill="#999">关注</text>
+  <text x="150" y="40" font-family="Arial" font-size="12" fill="#999">热门</text>
+  <text x="200" y="40" font-family="Arial" font-size="12" fill="#999">新歌</text>
+  
+  <!-- Cards -->
+  <rect x="20" y="60" width="170" height="120" rx="10" ry="10" fill="url(#card-gradient)" stroke="#ddd" stroke-width="1" />
+  <rect x="210" y="60" width="170" height="120" rx="10" ry="10" fill="url(#card-gradient)" stroke="#ddd" stroke-width="1" />
+  
+  <!-- Card 1 Content -->
+  <circle cx="40" cy="80" r="10" fill="#ff4e8a" />
+  <text x="60" y="84" font-family="Arial" font-size="10" fill="#333">音乐小天使</text>
+  
+  <text x="30" y="100" font-family="Arial" font-size="8" fill="#666">这首歌太治愈了！最近压力好大...</text>
+  
+  <rect x="30" y="110" width="150" height="30" rx="5" ry="5" fill="#f9f9f9" />
+  <rect x="35" y="115" width="20" height="20" fill="url(#cover-gradient1)" />
+  <text x="60" y="125" font-family="Arial" font-size="8" fill="#333">Daylight</text>
+  <text x="60" y="133" font-family="Arial" font-size="6" fill="#999">Taylor Swift</text>
+  
+  <!-- Card 2 Content -->
+  <circle cx="230" cy="80" r="10" fill="#8c52ff" />
+  <text x="250" y="84" font-family="Arial" font-size="10" fill="#333">摇滚精灵</text>
+  
+  <text x="220" y="100" font-family="Arial" font-size="8" fill="#666">周杰伦新歌终于发布了！这首...</text>
+  
+  <rect x="220" y="110" width="150" height="30" rx="5" ry="5" fill="#f9f9f9" />
+  <rect x="225" y="115" width="20" height="20" fill="url(#cover-gradient2)" />
+  <text x="250" y="125" font-family="Arial" font-size="8" fill="#333">等你下课</text>
+  <text x="250" y="133" font-family="Arial" font-size="6" fill="#999">周杰伦</text>
+</svg> 

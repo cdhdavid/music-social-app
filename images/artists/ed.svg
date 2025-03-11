@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="edGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FF7043;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#D84315;stop-opacity:1" />
+        </linearGradient>
+        <clipPath id="circleClip">
+            <circle cx="100" cy="90" r="70"/>
+        </clipPath>
+    </defs>
+    <rect width="200" height="200" fill="url(#edGradient)"/>
+    
+    <!-- 头像背景 -->
+    <circle cx="100" cy="90" r="70" fill="#FFFFFF" fill-opacity="0.2"/>
+    
+    <!-- 头像轮廓 -->
+    <g clip-path="url(#circleClip)">
+        <!-- 头部 -->
+        <ellipse cx="100" cy="80" rx="40" ry="45" fill="#FFFFFF"/>
+        
+        <!-- 头发 -->
+        <path d="M60,80 C60,50 80,30 100,30 C120,30 140,50 140,80 L140,90 C140,90 130,100 100,100 C70,100 60,90 60,90 L60,80 Z" fill="#FF5722"/>
+        
+        <!-- 胡子 -->
+        <path d="M80,90 C90,100 110,100 120,90" fill="#FF5722"/>
+        
+        <!-- 眼睛 -->
+        <circle cx="85" cy="75" r="5" fill="#333333"/>
+        <circle cx="115" cy="75" r="5" fill="#333333"/>
+        
+        <!-- 嘴巴 -->
+        <path d="M90,90 Q100,95 110,90" stroke="#333333" stroke-width="2" fill="none"/>
+        
+        <!-- 衣服 -->
+        <path d="M60,110 L60,170 L140,170 L140,110 C140,110 120,120 100,120 C80,120 60,110 60,110 Z" fill="#2196F3"/>
+        
+        <!-- 吉他 -->
+        <rect x="70" y="110" width="60" height="10" rx="5" ry="5" fill="#8D6E63"/>
+        <rect x="95" y="120" width="10" height="40" fill="#8D6E63"/>
+        <ellipse cx="100" cy="160" rx="20" ry="15" fill="#8D6E63"/>
+    </g>
+    
+    <text x="100" y="180" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Ed Sheeran</text>
+</svg> 

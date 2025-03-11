@@ -1,0 +1,91 @@
+@font-face {
+  font-family: "Font Awesome 6 Free";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("../fonts/fa-regular-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Font Awesome 6 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("../fonts/fa-solid-900.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Font Awesome 6 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("../fonts/fa-brands-400.woff2") format("woff2");
+}
+
+/* 基本图标定义 */
+.fas, 
+.fa-solid {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+}
+
+.far, 
+.fa-regular {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 400;
+}
+
+.fab, 
+.fa-brands {
+  font-family: 'Font Awesome 6 Brands';
+  font-weight: 400;
+}
+
+/* 常用图标的Unicode定义 */
+.fa-music:before { content: "\f001"; }
+.fa-play:before { content: "\f04b"; }
+.fa-pause:before { content: "\f04c"; }
+.fa-stop:before { content: "\f04d"; }
+.fa-step-backward:before, .fa-backward-step:before { content: "\f048"; }
+.fa-step-forward:before, .fa-forward-step:before { content: "\f051"; }
+.fa-shuffle:before { content: "\f074"; }
+.fa-repeat:before { content: "\f01e"; }
+.fa-download:before { content: "\f019"; }
+.fa-list:before { content: "\f03a"; }
+.fa-heart:before { content: "\f004"; }
+.fa-comment:before { content: "\f075"; }
+.fa-share:before { content: "\f064"; }
+.fa-bookmark:before { content: "\f02e"; }
+.fa-home:before { content: "\f015"; }
+.fa-search:before { content: "\f002"; }
+.fa-user:before { content: "\f007"; }
+.fa-plus:before { content: "\f067"; }
+.fa-check:before { content: "\f00c"; }
+.fa-circle:before { content: "\f111"; }
+.fa-arrow-right:before { content: "\f061"; }
+.fa-microphone-alt:before { content: "\f3c9"; }
+.fa-crown:before { content: "\f521"; }
+.fa-tag:before { content: "\f02b"; }
+.fa-certificate:before { content: "\f0a3"; }
+.fa-check-circle:before { content: "\f058"; }
+.fa-weixin:before { content: "\f1d7"; }
+.fa-qq:before { content: "\f1d6"; }
+.fa-weibo:before { content: "\f18a"; }
+.fa-ellipsis-h:before, .fa-ellipsis:before { content: "\f141"; }
+.fa-angle-right:before { content: "\f105"; }
+.fa-bounce:before { content: "\e150"; }
+
+/* 动画效果 */
+.fa-bounce {
+  animation: fa-bounce 1s infinite;
+}
+
+@keyframes fa-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+} 

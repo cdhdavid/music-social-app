@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f6f6f6" />
+      <stop offset="100%" stop-color="#e9e9e9" />
+    </linearGradient>
+    <linearGradient id="card-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f9f9f9" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="200" fill="url(#bg-gradient)" />
+  
+  <!-- Profile Card -->
+  <rect x="50" y="30" width="300" height="140" rx="10" ry="10" fill="url(#card-gradient)" stroke="#ddd" stroke-width="1" />
+  
+  <!-- Profile Title -->
+  <text x="70" y="50" font-family="Arial" font-size="14" font-weight="bold" fill="#333">你的音乐性格是</text>
+  <text x="200" y="50" font-family="Arial" font-size="14" font-weight="bold" fill="#ff4e8a">浪漫主义者</text>
+  
+  <!-- Trait Bars -->
+  <text x="70" y="80" font-family="Arial" font-size="12" fill="#666">流行</text>
+  <rect x="120" y="72" width="200" height="10" rx="5" ry="5" fill="#f0f0f0" />
+  <rect x="120" y="72" width="170" height="10" rx="5" ry="5" fill="#ff4e8a" />
+  
+  <text x="70" y="100" font-family="Arial" font-size="12" fill="#666">民谣</text>
+  <rect x="120" y="92" width="200" height="10" rx="5" ry="5" fill="#f0f0f0" />
+  <rect x="120" y="92" width="130" height="10" rx="5" ry="5" fill="#ff4e8a" />
+  
+  <text x="70" y="120" font-family="Arial" font-size="12" fill="#666">电子</text>
+  <rect x="120" y="112" width="200" height="10" rx="5" ry="5" fill="#f0f0f0" />
+  <rect x="120" y="112" width="90" height="10" rx="5" ry="5" fill="#ff4e8a" />
+  
+  <text x="70" y="140" font-family="Arial" font-size="12" fill="#666">摇滚</text>
+  <rect x="120" y="132" width="200" height="10" rx="5" ry="5" fill="#f0f0f0" />
+  <rect x="120" y="132" width="60" height="10" rx="5" ry="5" fill="#ff4e8a" />
+</svg> 

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音乐社交 - 社交关系</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!-- 社交关系建立页面 -->
+  <div class="social-container">
+    <!-- 顶部导航 -->
+    <div class="social-navbar">
+      <div class="back-btn"></div>
+      <div class="tab-container">
+        <div class="tab active">好友推荐</div>
+        <div class="tab">我的关注</div>
+        <div class="tab">我的粉丝</div>
+      </div>
+      <div class="search-icon"></div>
+    </div>
+    
+    <!-- 音乐好友推荐 -->
+    <div class="friend-recommendation">
+      <h3 class="section-title">与你音乐品味相似的用户</h3>
+      
+      <div class="user-cards">
+        <div class="user-card">
+          <div class="user-info">
+            <img src="../images/recommended-user1.jpg" class="user-avatar-large">
+            <div class="user-details">
+              <div class="user-name">摇滚精灵</div>
+              <div class="user-tags">
+                <span class="user-tag">摇滚</span>
+                <span class="user-tag">民谣</span>
+              </div>
+              <div class="match-info">
+                <div class="match-percentage">音乐匹配度 92%</div>
+                <div class="common-artists">
+                  <span>共同喜欢:</span>
+                  <img src="../images/common-artist1.jpg" class="mini-artist">
+                  <img src="../images/common-artist2.jpg" class="mini-artist">
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="user-music-preview">
+            <h4 class="preview-title">TA的热门歌单</h4>
+            <div class="playlist-preview">
+              <div class="playlist-item">
+                <img src="../images/playlist1.jpg" class="playlist-cover">
+                <div class="playlist-name">午后摇滚时光</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="social-actions">
+            <button class="follow-btn primary">关注</button>
+            <button class="message-btn">私信</button>
+            <button class="recommend-btn">推荐歌曲</button>
+          </div>
+        </div>
+        
+        <!-- 第二个用户卡片 -->
+        <div class="user-card">
+          <div class="user-info">
+            <img src="../images/recommended-user2.jpg" class="user-avatar-large">
+            <div class="user-details">
+              <div class="user-name">电音少女</div>
+              <div class="user-tags">
+                <span class="user-tag">电子</span>
+                <span class="user-tag">流行</span>
+              </div>
+              <div class="match-info">
+                <div class="match-percentage">音乐匹配度 87%</div>
+                <div class="common-artists">
+                  <span>共同喜欢:</span>
+                  <img src="../images/common-artist3.jpg" class="mini-artist">
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="user-music-preview">
+            <h4 class="preview-title">TA的热门歌单</h4>
+            <div class="playlist-preview">
+              <div class="playlist-item">
+                <img src="../images/playlist2.jpg" class="playlist-cover">
+                <div class="playlist-name">电音派对必备</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="social-actions">
+            <button class="follow-btn primary">关注</button>
+            <button class="message-btn">私信</button>
+            <button class="recommend-btn">推荐歌曲</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 共同好友推荐 -->
+      <div class="mutual-friends">
+        <h3 class="section-title">你可能认识的人</h3>
+        <div class="mutual-cards">
+          <div class="mutual-card">
+            <img src="../images/mutual-user1.jpg" class="mutual-avatar">
+            <div class="mutual-info">
+              <div class="mutual-name">电音少女</div>
+              <div class="mutual-connection">
+                <span>3个共同好友</span>
+                <div class="mutual-avatars">
+                  <img src="../images/mutual-friend1.jpg">
+                  <img src="../images/mutual-friend2.jpg">
+                  <img src="../images/mutual-friend3.jpg">
+                </div>
+              </div>
+            </div>
+            <button class="follow-small-btn">关注</button>
+          </div>
+          
+          <div class="mutual-card">
+            <img src="../images/mutual-user2.jpg" class="mutual-avatar">
+            <div class="mutual-info">
+              <div class="mutual-name">古典音乐家</div>
+              <div class="mutual-connection">
+                <span>1个共同好友</span>
+                <div class="mutual-avatars">
+                  <img src="../images/mutual-friend4.jpg">
+                </div>
+              </div>
+            </div>
+            <button class="follow-small-btn">关注</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 音乐共鸣群 -->
+      <div class="music-groups">
+        <h3 class="section-title">推荐音乐共鸣群</h3>
+        <div class="group-cards">
+          <div class="group-card">
+            <img src="../images/group1.jpg" class="group-cover">
+            <div class="group-info">
+              <div class="group-name">周杰伦粉丝会</div>
+              <div class="group-stats">
+                <span class="member-count">2.3万成员</span>
+                <span class="activity-level">活跃度高</span>
+              </div>
+              <div class="group-description">分享周杰伦音乐，讨论演唱会，交流同款周边</div>
+            </div>
+            <button class="join-group-btn">加入</button>
+          </div>
+          
+          <div class="group-card">
+            <img src="../images/group2.jpg" class="group-cover">
+            <div class="group-info">
+              <div class="group-name">民谣爱好者</div>
+              <div class="group-stats">
+                <span class="member-count">1.5万成员</span>
+                <span class="activity-level">活跃度中</span>
+              </div>
+              <div class="group-description">分享小众民谣歌手，讨论吉他弹唱技巧</div>
+            </div>
+            <button class="join-group-btn">加入</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 邀请好友 -->
+    <div class="invite-friends">
+      <div class="invite-card">
+        <div class="invite-icon"></div>
+        <div class="invite-text">
+          <h3 class="invite-title">邀请好友加入</h3>
+          <p class="invite-description">邀请3位好友注册，获得7天VIP特权</p>
+        </div>
+        <button class="invite-btn">立即邀请</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部播放控件 (QQ音乐风格) -->
+  <div class="bottom-player">
+    <div class="mini-player">
+      <img src="../images/current-song.jpg" class="mini-cover">
+      <div class="mini-info">
+        <div class="mini-song-name">晴天</div>
+        <div class="mini-artist">周杰伦</div>
+      </div>
+      <div class="mini-controls">
+        <div class="mini-play-btn"></div>
+        <div class="mini-next-btn"></div>
+      </div>
+      <div class="mini-playlist-btn"></div>
+    </div>
+  </div>
+
+  <script src="../js/social.js"></script>
+</body>
+</html> 

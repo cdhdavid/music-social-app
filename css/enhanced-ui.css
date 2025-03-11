@@ -1,0 +1,268 @@
+/* 增强UI设计和用户交互体验 */
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* 渐变文本效果增强兼容性 */
+[style*="background-clip: text"],
+[style*="-webkit-background-clip: text"],
+[class*="gradient-text"] {
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important; /* 兼容不支持background-clip的浏览器 */
+}
+
+/* 增强设备框架效果 */
+.device-frame {
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 
+              0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+              0 0 30px rgba(255, 255, 255, 0.1) inset;
+}
+
+.device-frame:hover {
+  transform: rotateY(-8deg) rotateX(5deg) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), 
+              0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+              0 0 30px rgba(255, 255, 255, 0.15) inset;
+}
+
+.device-notch {
+  background: #111;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset;
+}
+
+.device-notch:after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #333;
+  border-radius: 50%;
+  top: 10px;
+  left: 30px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5) inset;
+}
+
+.device-home-indicator {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s;
+}
+
+.device-screen:hover .device-home-indicator {
+  opacity: 0.5;
+}
+
+/* 页面内容增强 */
+.page-device-container {
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* 按钮增强 */
+button, .btn, .follow-btn, .register-btn, .verification-code-btn {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+button:after, .btn:after, .follow-btn:after, .register-btn:after, .verification-code-btn:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+                              rgba(255,255,255,0) 0%, 
+                              rgba(255,255,255,0.2) 50%, 
+                              rgba(255,255,255,0) 100%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+button:hover:after, .btn:hover:after, .follow-btn:hover:after, 
+.register-btn:hover:after, .verification-code-btn:hover:after {
+  transform: translateX(100%);
+}
+
+button:active, .btn:active, .follow-btn:active, 
+.register-btn:active, .verification-code-btn:active {
+  transform: scale(0.96);
+}
+
+/* 输入框增强 */
+input[type="text"], input[type="password"], .search-bar input {
+  transition: all 0.3s;
+  border: 2px solid transparent;
+  background-color: var(--divider);
+}
+
+input[type="text"]:focus, input[type="password"]:focus, .search-bar input:focus {
+  border-color: var(--primary-color);
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(255, 78, 138, 0.2);
+}
+
+/* 卡片增强 */
+.music-note-card {
+  transition: all 0.3s;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.music-note-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 图片和头像增强 */
+.note-user-avatar, .user-avatar img, .mini-avatars img {
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.note-user-avatar:hover, .user-avatar img:hover, .mini-avatars img:hover {
+  transform: scale(1.1);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(255, 78, 138, 0.2);
+}
+
+/* 音乐播放器增强 */
+.note-play-btn, .mini-play-btn {
+  transition: all 0.3s;
+}
+
+.note-play-btn:hover, .mini-play-btn:hover {
+  transform: scale(1.15);
+  animation: pulse 1s infinite;
+}
+
+/* 底部播放器增强 */
+.bottom-player {
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.bottom-player:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 标签和徽章增强 */
+.tab, .benefit-tag, .spec-tag, .note-user-tag {
+  transition: all 0.3s;
+}
+
+.tab:hover, .benefit-tag:hover, .spec-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tab.active {
+  position: relative;
+}
+
+.tab.active:after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: var(--primary-color);
+  border-radius: 3px;
+  animation: fadeIn 0.3s;
+}
+
+/* 加载动画 */
+.loading-animation {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.loading-animation:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--primary-color);
+  border-bottom-color: var(--secondary-color);
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 骨架屏加载效果 */
+.skeleton-loading {
+  background: linear-gradient(90deg, 
+                             var(--divider) 25%, 
+                             var(--background) 50%, 
+                             var(--divider) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+
+/* 滚动条美化 */
+.device-content {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-light) transparent;
+}
+
+.device-content::-webkit-scrollbar {
+  width: 4px;
+  display: block;
+}
+
+.device-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.device-content::-webkit-scrollbar-thumb {
+  background-color: var(--primary-light);
+  border-radius: 20px;
+}
+
+/* 页面切换动画 */
+@keyframes pageTransition {
+  0% { opacity: 0; transform: translateX(20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.page-transition {
+  animation: pageTransition 0.5s ease-out;
+}
+
+/* 响应式增强 */
+@media (max-width: 768px) {
+  .device-frame:hover {
+    transform: rotateY(-5deg) rotateX(3deg) scale(1.01);
+  }
+  
+  .music-note-card:hover {
+    transform: translateY(-3px);
+  }
+} 

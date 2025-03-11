@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音乐社交 - 社交关系</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/enhanced-ui.css">
+  <link rel="stylesheet" href="../assets/css/iconfont.css">
+  <style>
+    .social-container {
+      min-height: 100vh;
+      background-color: var(--background);
+      padding: var(--spacing-md);
+      padding-bottom: 126px;
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    /* 顶部导航栏 */
+    .social-navbar {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      background-color: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .back-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 50%;
+    }
+    
+    .back-btn:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: var(--primary-color);
+    }
+    
+    .social-title {
+      flex: 1;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-color);
+      text-align: center;
+    }
+    
+    .action-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 50%;
+    }
+    
+    .action-icon:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: var(--primary-color);
+    }
+    
+    /* 标签栏 */
+    .tab-container {
+      display: flex;
+      padding: 12px 16px;
+      background-color: var(--surface);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      margin-top: 0;
+    }
+    
+    .tab-container::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .tab {
+      padding: 8px 20px;
+      margin: 0 8px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-light);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .tab:first-child {
+      margin-left: 0;
+    }
+    
+    .tab:hover {
+      color: var(--primary-color);
+      background-color: rgba(255, 78, 138, 0.05);
+    }
+    
+    .tab.active {
+      color: white;
+      background-color: var(--primary-color);
+      box-shadow: 0 2px 8px rgba(255, 78, 138, 0.3);
+    }
+    
+    /* 搜索栏 */
+    .search-bar {
+      margin: 16px;
+      position: relative;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-lighter);
+      font-size: 14px;
+    }
+    
+    .search-bar input {
+      width: 100%;
+      padding: 12px 12px 12px 36px;
+      border-radius: 20px;
+      border: none;
+      background-color: var(--divider);
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+    
+    .search-bar input:focus {
+      background-color: white;
+      box-shadow: 0 0 0 2px rgba(255, 78, 138, 0.2);
+      outline: none;
+    }
+    
+    /* 用户列表 */
+    .user-list-section {
+      padding: 16px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .section-title i {
+      margin-right: 8px;
+      color: var(--primary-color);
+    }
+    
+    .user-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .user-item {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s;
+    }
+    
+    .user-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .user-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-right: 16px;
+      object-fit: cover;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+    
+    .user-avatar:hover {
+      border-color: var(--primary-color);
+      transform: scale(1.05);
+    }
+    
+    .user-info {
+      flex: 1;
+    }
+    
+    .user-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 4px;
+    }
+    
+    .user-bio {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .user-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    
+    .user-tag {
+      font-size: 12px;
+      color: var(--primary-color);
+      background-color: rgba(255, 78, 138, 0.1);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    
+    .follow-btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+    
+    .follow-btn.primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .follow-btn.primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 78, 138, 0.3);
+    }
+    
+    .follow-btn.followed {
+      background-color: var(--divider);
+      color: var(--text-light);
+    }
+    
+    .follow-btn.followed:hover {
+      background-color: var(--error);
+      color: white;
+    }
+    
+    /* 推荐用户 */
+    .recommendation-section {
+      padding: 16px;
+    }
+    
+    .recommendation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    
+    .recommendation-card {
+      background-color: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s;
+    }
+    
+    .recommendation-cover {
+      width: 100%;
+      height: 100px;
+      position: relative;
+      background: linear-gradient(45deg, #ff85a8, #ff4e8a);
+      overflow: hidden;
+    }
+    
+    .recommendation-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+    
+    .recommendation-cover-gradient {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.5) 100%);
+    }
+    
+    .recommendation-content {
+      padding: 16px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .recommendation-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin-right: 12px;
+      object-fit: cover;
+      border: 2px solid white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+    }
+    
+    .recommendation-info {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .recommendation-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 4px;
+    }
+    
+    .recommendation-match {
+      font-size: 12px;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .recommendation-match::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+    }
+    
+    .common-interests {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    
+    .common-interest {
+      font-size: 12px;
+      color: var(--text-light);
+      background-color: var(--divider);
+      padding: 4px 8px;
+      border-radius: 12px;
+    }
+
+    .recommendation-card .follow-btn {
+      width: 100%;
+    }
+    
+    /* 空状态 */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 16px;
+      text-align: center;
+      min-height: calc(100vh - 250px);
+      background-color: var(--surface);
+    }
+    
+    .empty-icon {
+      margin-bottom: 24px;
+    }
+    
+    .empty-icon .material-icons {
+      font-size: 64px;
+      color: var(--divider);
+    }
+    
+    .empty-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 12px;
+    }
+    
+    .empty-description {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-bottom: 32px;
+      max-width: 300px;
+      line-height: 1.5;
+    }
+    
+    .import-btn {
+      padding: 12px 24px;
+      border-radius: 24px;
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(255, 78, 138, 0.2);
+    }
+    
+    .import-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 78, 138, 0.3);
+    }
+    
+    .import-btn .material-icons {
+      font-size: 20px;
+    }
+    
+    /* 底部播放器 */
+    .bottom-player {
+      position: fixed;
+      bottom: 56px; /* 底部导航栏的高度 */
+      left: 0;
+      right: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      height: 64px; /* 固定高度 */
+      box-sizing: border-box; /* 确保padding不会增加元素高度 */
+    }
+    
+    .mini-player {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      position: relative; /* 添加相对定位 */
+    }
+    
+    .mini-cover {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+      margin-right: 12px;
+      flex-shrink: 0; /* 防止图片被压缩 */
+    }
+    
+    .mini-cover:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .mini-info {
+      flex: 1;
+      overflow: hidden;
+      min-width: 0; /* 确保文本可以正确截断 */
+      margin-right: 12px; /* 与控制按钮保持距离 */
+    }
+    
+    .mini-song-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .mini-artist {
+      font-size: 12px;
+      color: var(--text-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .mini-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0; /* 防止控制按钮被压缩 */
+    }
+    
+    .mini-play-btn, .mini-next-btn, .mini-playlist-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary-color);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 5px rgba(255, 78, 138, 0.3);
+      flex-shrink: 0;
+    }
+    
+    .mini-play-btn:hover, .mini-next-btn:hover, .mini-playlist-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 8px rgba(255, 78, 138, 0.4);
+    }
+    
+    /* 底部导航 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0 8px;
+      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.05);
+      z-index: 101;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      height: 56px; /* 固定高度 */
+      box-sizing: border-box; /* 确保padding不会增加元素高度 */
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-lighter);
+      font-size: 12px;
+      transition: all 0.3s;
+      padding: 6px 12px;
+      border-radius: 16px;
+    }
+    
+    .nav-item i {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+      background-color: rgba(255, 78, 138, 0.08);
+    }
+    
+    .nav-item:hover {
+      color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 480px) {
+      .recommendation-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .user-avatar {
+        width: 50px;
+        height: 50px;
+      }
+    }
+    
+    .stat-item .material-icons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 社交关系页面 -->
+  <div class="social-container">
+    <!-- 标签栏 -->
+    <div class="tab-container">
+      <div class="tab active">关注</div>
+      <div class="tab">粉丝</div>
+      <div class="tab">发现</div>
+    </div>
+    
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+      <span class="material-icons search-icon">search</span>
+      <input type="text" placeholder="搜索用户">
+    </div>
+    
+    <!-- 关注的用户列表 -->
+    <div class="user-list-section">
+      <h3 class="section-title">
+        <span class="material-icons">person</span>
+        我关注的人
+      </h3>
+      <div class="user-list">
+        <div class="user-item">
+          <img src="../images/user1.svg" class="user-avatar">
+          <div class="user-info">
+            <div class="user-name">摇滚精灵</div>
+            <div class="user-bio">热爱摇滚乐，吉他手，喜欢分享音乐见解和演出体验</div>
+            <div class="user-tags">
+              <span class="user-tag">摇滚</span>
+              <span class="user-tag">吉他</span>
+            </div>
+          </div>
+          <button class="follow-btn followed">已关注</button>
+        </div>
+        
+        <div class="user-item">
+          <img src="../images/user2.svg" class="user-avatar">
+          <div class="user-info">
+            <div class="user-name">电音少女</div>
+            <div class="user-bio">电子音乐爱好者，DJ，喜欢分享最新的电音趋势和混音作品</div>
+            <div class="user-tags">
+              <span class="user-tag">电子</span>
+              <span class="user-tag">DJ</span>
+            </div>
+          </div>
+          <button class="follow-btn followed">已关注</button>
+        </div>
+        
+        <div class="user-item">
+          <img src="../images/user3.svg" class="user-avatar">
+          <div class="user-info">
+            <div class="user-name">民谣君</div>
+            <div class="user-bio">民谣歌手，创作人，喜欢分享原创作品和民谣推荐</div>
+            <div class="user-tags">
+              <span class="user-tag">民谣</span>
+              <span class="user-tag">创作</span>
+            </div>
+          </div>
+          <button class="follow-btn followed">已关注</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 粉丝列表 (默认隐藏) -->
+    <div class="user-list-section" style="display: none;">
+      <h3 class="section-title">
+        <span class="material-icons">group</span>
+        关注我的人
+      </h3>
+      <div class="empty-state">
+        <div class="empty-icon">
+          <span class="material-icons">group</span>
+        </div>
+        <h3 class="empty-title">还没有粉丝</h3>
+        <p class="empty-description">分享你的音乐品味，吸引更多志同道合的朋友关注你</p>
+        <button class="import-btn">
+          <span class="material-icons">person_add</span>
+          <span>导入通讯录</span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 推荐用户 (默认隐藏) -->
+    <div class="recommendation-section" style="display: none;">
+      <h3 class="section-title">
+        <span class="material-icons">person_add</span>
+        推荐关注
+      </h3>
+      <div class="recommendation-grid">
+        <div class="recommendation-card">
+          <div class="recommendation-cover">
+            <img src="../images/song1.svg" alt="背景封面">
+            <div class="recommendation-cover-gradient"></div>
+          </div>
+          <div class="recommendation-content">
+            <img src="../images/user2.svg" class="recommendation-avatar" alt="用户头像">
+            <div class="recommendation-name">古典音乐家</div>
+            <div class="recommendation-match">
+              <span class="material-icons">favorite</span>
+              音乐匹配度 85%
+            </div>
+            <div class="common-interests">
+              <span class="common-interest">古典</span>
+              <span class="common-interest">钢琴</span>
+            </div>
+            <button class="follow-btn primary">关注</button>
+          </div>
+        </div>
+        
+        <div class="recommendation-card">
+          <div class="recommendation-cover">
+            <img src="../images/song2.svg" alt="背景封面">
+            <div class="recommendation-cover-gradient"></div>
+          </div>
+          <div class="recommendation-content">
+            <img src="../images/user3.svg" class="recommendation-avatar" alt="用户头像">
+            <div class="recommendation-name">爵士乐手</div>
+            <div class="recommendation-match">音乐匹配度 78%</div>
+            <div class="common-interests">
+              <span class="common-interest">爵士</span>
+              <span class="common-interest">萨克斯</span>
+            </div>
+            <button class="follow-btn primary">关注</button>
+          </div>
+        </div>
+        
+        <div class="recommendation-card">
+          <div class="recommendation-cover">
+            <img src="../images/song3.svg" alt="背景封面">
+            <div class="recommendation-cover-gradient"></div>
+          </div>
+          <div class="recommendation-content">
+            <img src="../images/user1.svg" class="recommendation-avatar" alt="用户头像">
+            <div class="recommendation-name">嘻哈达人</div>
+            <div class="recommendation-match">音乐匹配度 72%</div>
+            <div class="common-interests">
+              <span class="common-interest">嘻哈</span>
+              <span class="common-interest">说唱</span>
+            </div>
+            <button class="follow-btn primary">关注</button>
+          </div>
+        </div>
+        
+        <div class="recommendation-card">
+          <div class="recommendation-cover">
+            <img src="../images/song1.svg" alt="背景封面">
+            <div class="recommendation-cover-gradient"></div>
+          </div>
+          <div class="recommendation-content">
+            <img src="../images/user-avatar.svg" class="recommendation-avatar" alt="用户头像">
+            <div class="recommendation-name">乡村音乐爱好者</div>
+            <div class="recommendation-match">音乐匹配度 68%</div>
+            <div class="common-interests">
+              <span class="common-interest">乡村</span>
+              <span class="common-interest">吉他</span>
+            </div>
+            <button class="follow-btn primary">关注</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 底部导航 -->
+    <div class="bottom-nav">
+      <div class="nav-item">
+        <span class="material-icons">home</span>
+        <span>首页</span>
+      </div>
+      <div class="nav-item">
+        <span class="material-icons">explore</span>
+        <span>发现</span>
+      </div>
+      <div class="nav-item active">
+        <span class="material-icons">person</span>
+        <span>社交</span>
+      </div>
+      <div class="nav-item">
+        <span class="material-icons">groups</span>
+        <span>社区</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 底部播放控件 (QQ音乐风格) -->
+  <div class="bottom-player">
+    <div class="mini-player">
+      <img src="../images/song1.svg" class="mini-cover">
+      <div class="mini-info">
+        <div class="mini-song-name">晴天</div>
+        <div class="mini-artist">周杰伦</div>
+      </div>
+      <div class="mini-controls">
+        <div class="mini-play-btn">
+          <span class="material-icons">play_arrow</span>
+        </div>
+        <div class="mini-next-btn">
+          <span class="material-icons">skip_next</span>
+        </div>
+        <div class="mini-playlist-btn">
+          <span class="material-icons">queue_music</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 标签切换功能
+      const tabs = document.querySelectorAll('.tab');
+      const userListSection = document.querySelector('.user-list-section');
+      const recommendationSection = document.querySelector('.recommendation-section');
+      const emptyState = document.querySelector('.empty-state');
+      
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', function() {
+          // 移除所有active类
+          tabs.forEach(t => t.classList.remove('active'));
+          // 添加当前active类
+          this.classList.add('active');
+          
+          // 切换内容显示
+          if (index === 0) { // 关注
+            userListSection.style.display = 'block';
+            recommendationSection.style.display = 'none';
+            emptyState.style.display = 'none';
+          } else if (index === 1) { // 粉丝
+            userListSection.style.display = 'none';
+            recommendationSection.style.display = 'none';
+            emptyState.style.display = 'block';
+          } else if (index === 2) { // 发现
+            userListSection.style.display = 'none';
+            recommendationSection.style.display = 'block';
+            emptyState.style.display = 'none';
+          }
+        });
+      });
+      
+      // 关注按钮功能
+      const followBtns = document.querySelectorAll('.follow-btn');
+      followBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          if (this.classList.contains('followed')) {
+            this.classList.remove('followed');
+            this.classList.add('primary');
+            this.textContent = '关注';
+          } else {
+            this.classList.remove('primary');
+            this.classList.add('followed');
+            this.textContent = '已关注';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html> 

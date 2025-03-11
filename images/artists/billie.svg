@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="billieGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2ECC71;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#27AE60;stop-opacity:1" />
+        </linearGradient>
+        <clipPath id="circleClip">
+            <circle cx="100" cy="90" r="70"/>
+        </clipPath>
+    </defs>
+    <rect width="200" height="200" fill="url(#billieGradient)"/>
+    
+    <!-- 头像背景 -->
+    <circle cx="100" cy="90" r="70" fill="#FFFFFF" fill-opacity="0.2"/>
+    
+    <!-- 头像轮廓 -->
+    <g clip-path="url(#circleClip)">
+        <!-- 头部 -->
+        <ellipse cx="100" cy="80" rx="40" ry="45" fill="#FFFFFF"/>
+        
+        <!-- 头发 -->
+        <path d="M60,80 C60,50 80,30 100,30 C120,30 140,50 140,80 L140,90 C140,90 130,100 100,100 C70,100 60,90 60,90 L60,80 Z" fill="#2ECC71"/>
+        <path d="M60,80 C60,60 70,40 100,40 C130,40 140,60 140,80 L140,85 C140,85 130,95 100,95 C70,95 60,85 60,85 L60,80 Z" fill="#27AE60"/>
+        
+        <!-- 眼睛 -->
+        <circle cx="85" cy="75" r="5" fill="#333333"/>
+        <circle cx="115" cy="75" r="5" fill="#333333"/>
+        
+        <!-- 嘴巴 -->
+        <path d="M90,90 Q100,85 110,90" stroke="#333333" stroke-width="2" fill="none"/>
+        
+        <!-- 衣服 -->
+        <path d="M60,110 L60,170 L140,170 L140,110 C140,110 120,120 100,120 C80,120 60,110 60,110 Z" fill="#2ECC71"/>
+        
+        <!-- 项链 -->
+        <circle cx="100" cy="110" r="5" fill="#FFD700"/>
+        <path d="M95,110 L90,120" stroke="#FFD700" stroke-width="2" fill="none"/>
+        <path d="M105,110 L110,120" stroke="#FFD700" stroke-width="2" fill="none"/>
+    </g>
+    
+    <text x="100" y="180" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Billie Eilish</text>
+</svg> 

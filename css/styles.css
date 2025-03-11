@@ -1,0 +1,1032 @@
+/* 全局样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Material Design 3 颜色系统 */
+:root {
+  /* 主色调 */
+  --primary-color: #ff4e8a;
+  --primary-light: #ff85a8;
+  --primary-dark: #d4306e;
+  
+  /* 次要色 */
+  --secondary-color: #8c52ff;
+  --secondary-light: #b47fff;
+  --secondary-dark: #5e17eb;
+  
+  /* 中性色 */
+  --text-color: #333333;
+  --text-light: #666666;
+  --text-lighter: #999999;
+  --background: #f8f8f8;
+  --surface: #ffffff;
+  --divider: #f0f0f0;
+  --disabled: #e0e0e0;
+  
+  /* 功能色 */
+  --error: #ff3b30;
+  --success: #34c759;
+  --warning: #ff9500;
+  --info: #007aff;
+  
+  /* 间距 - 8dp基准单位 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  
+  /* 圆角 */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  /* 阴影 */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+  
+  /* 动效时间 */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* 标准字体 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* 通用组件样式 */
+.back-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.follow-btn {
+  padding: 4px 12px;
+  border-radius: 16px;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+}
+
+.follow-btn.followed {
+  background-color: var(--divider);
+  color: var(--text-light);
+}
+
+.follow-btn.primary {
+  padding: 8px 20px;
+  font-size: 14px;
+}
+
+/* 底部播放控件 (QQ音乐风格) */
+.bottom-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 100;
+}
+
+.mini-player {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.mini-cover {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  margin-right: 12px;
+  background-color: #eee;
+  background-size: cover;
+  background-position: center;
+}
+
+.mini-info {
+  flex: 1;
+}
+
+.mini-song-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 2px;
+}
+
+.mini-artist {
+  font-size: 12px;
+  color: var(--text-lighter);
+}
+
+.mini-controls {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.mini-play-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.mini-next-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mini-playlist-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* 瀑布流布局 */
+.waterfall-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 70px; /* 为底部播放器留出空间 */
+}
+
+.community-waterfall {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 70px;
+}
+
+/* 音乐笔记卡片 */
+.music-note-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-header {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+}
+
+.note-user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.note-user-info {
+  flex: 1;
+}
+
+.note-username {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.note-user-tag {
+  font-size: 12px;
+  color: #999;
+}
+
+.note-content {
+  padding: 0 12px 12px;
+}
+
+.note-text {
+  font-size: 14px;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.note-music-player {
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 12px;
+}
+
+.note-song-cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  margin-right: 12px;
+}
+
+.note-song-info {
+  flex: 1;
+}
+
+.note-song-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.note-song-artist {
+  font-size: 12px;
+  color: #999;
+}
+
+.note-play-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.note-images {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+
+.note-image {
+  width: 100%;
+  border-radius: 8px;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.note-footer {
+  padding: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.note-stats {
+  margin-bottom: 8px;
+}
+
+.listening-users {
+  display: flex;
+  align-items: center;
+}
+
+.mini-avatars {
+  display: flex;
+  margin-right: 8px;
+}
+
+.mini-avatars img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid white;
+  margin-right: -8px;
+}
+
+.listening-text {
+  font-size: 12px;
+  color: #666;
+}
+
+.note-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.action-btn i {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+}
+
+.action-btn .material-icons {
+  font-size: 20px;
+  color: var(--text-lighter);
+  transition: all 0.3s;
+}
+
+.action-btn:hover .material-icons {
+  color: var(--primary-color);
+}
+
+.action-btn.active .material-icons {
+  color: var(--primary-color);
+}
+
+.mini-controls .material-icons {
+  font-size: 20px;
+  color: white;
+}
+
+.player-controls .material-icons {
+  font-size: 24px;
+  color: var(--text-color);
+}
+
+.player-controls .play-btn .material-icons {
+  font-size: 32px;
+}
+
+/* 删除所有旧的图标背景图片 */
+.like-icon,
+.comment-icon,
+.share-icon,
+.save-icon,
+.shuffle-btn,
+.prev-btn,
+.play-btn,
+.next-btn,
+.repeat-btn,
+.download-icon,
+.playlist-icon,
+.lyrics-icon,
+.recommend-icon {
+  background-image: none;
+}
+
+.action-count {
+  font-size: 12px;
+  color: #666;
+}
+
+/* 音乐播放器 (QQ音乐风格) */
+.music-player {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.song-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.song-cover-large {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  margin-right: 16px;
+}
+
+.song-details {
+  flex: 1;
+}
+
+.song-name-large {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.song-artist-large {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.song-album {
+  font-size: 12px;
+  color: #999;
+}
+
+.player-controls {
+  margin-bottom: 16px;
+}
+
+.progress-bar {
+  height: 4px;
+  background-color: #e0e0e0;
+  border-radius: 2px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.progress-current {
+  height: 100%;
+  background-color: #ff4e8a;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.progress-handle {
+  width: 12px;
+  height: 12px;
+  background-color: #ff4e8a;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(45% - 6px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 12px;
+}
+
+.control-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shuffle-btn, .repeat-btn {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.shuffle-btn {
+  background-image: url('../images/shuffle-icon.png');
+  margin-right: 16px;
+}
+
+.shuffle-btn::before {
+  content: none;
+}
+
+.prev-btn, .next-btn {
+  width: 32px;
+  height: 32px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.prev-btn {
+  background-image: url('../images/prev-icon.png');
+}
+
+.prev-btn::before {
+  content: none;
+}
+
+.play-btn {
+  width: 48px;
+  height: 48px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 0 16px;
+  cursor: pointer;
+}
+
+.play-btn {
+  background-image: url('../images/play-large-icon.png');
+}
+
+.play-btn::before {
+  content: none;
+}
+
+.play-btn.playing {
+  background-image: url('../images/pause-large-icon.png');
+}
+
+.play-btn.playing::before {
+  content: none;
+}
+
+.next-btn {
+  background-image: url('../images/next-icon.png');
+}
+
+.next-btn::before {
+  content: none;
+}
+
+.repeat-btn {
+  background-image: url('../images/repeat-icon.png');
+  margin-left: 16px;
+}
+
+.repeat-btn::before {
+  content: none;
+}
+
+.player-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.action-btn i {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-bottom: 4px;
+}
+
+.action-btn span {
+  font-size: 12px;
+  color: #666;
+}
+
+.download-icon {
+  background-image: url('../images/download-icon.png');
+}
+
+.download-icon::before {
+  content: none;
+}
+
+.playlist-icon {
+  background-image: url('../images/playlist-icon.png');
+}
+
+.playlist-icon::before {
+  content: none;
+}
+
+.lyrics-icon {
+  background-image: url('../images/lyrics-icon.png');
+}
+
+.lyrics-icon::before {
+  content: none;
+}
+
+.recommend-icon {
+  background-image: url('../images/recommend-icon.png');
+}
+
+.recommend-icon::before {
+  content: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .waterfall-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 图片占位符样式 */
+.placeholder-image {
+  background-color: #eee;
+  background-image: linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 75%, #f0f0f0 75%, #f0f0f0), 
+                    linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 75%, #f0f0f0 75%, #f0f0f0);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* 用户头像占位符 */
+.user-avatar-placeholder {
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* 歌曲封面占位符 */
+.song-cover-placeholder {
+  background-color: var(--secondary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.song-cover-placeholder::before {
+  content: none;
+}
+
+/* 图标样式替换 */
+.like-icon::before {
+  content: none;
+}
+
+.action-btn.active .like-icon::before {
+  content: none;
+}
+
+.comment-icon::before {
+  content: none;
+}
+
+.share-icon::before {
+  content: none;
+}
+
+.save-icon::before {
+  content: none;
+}
+
+.action-btn.active .save-icon::before {
+  content: none;
+}
+
+/* 播放器控件图标 */
+.shuffle-btn::before {
+  content: none;
+}
+
+.prev-btn::before {
+  content: none;
+}
+
+.play-btn::before {
+  content: none;
+}
+
+.play-btn.playing::before {
+  content: none;
+}
+
+.next-btn::before {
+  content: none;
+}
+
+.repeat-btn::before {
+  content: none;
+}
+
+/* 播放器动作图标 */
+.download-icon::before {
+  content: none;
+}
+
+.playlist-icon::before {
+  content: none;
+}
+
+.lyrics-icon::before {
+  content: none;
+}
+
+.recommend-icon::before {
+  content: none;
+}
+
+/* Material Icons样式调整 */
+.material-icons {
+  vertical-align: middle;
+  font-size: 20px;
+}
+
+.nav-item .material-icons {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.action-btn .material-icons {
+  font-size: 18px;
+  margin-right: 4px;
+  color: var(--text-lighter);
+}
+
+.action-btn.active .material-icons {
+  color: var(--primary-color);
+}
+
+.mini-controls .material-icons {
+  font-size: 20px;
+  color: white;
+}
+
+.search-icon.material-icons {
+  font-size: 16px;
+  color: var(--text-lighter);
+}
+
+.section-title .material-icons {
+  margin-right: 8px;
+  color: var(--primary-color);
+}
+
+.refresh-icon.material-icons {
+  animation: spin 1.5s linear infinite;
+}
+
+.empty-icon .material-icons {
+  font-size: 60px;
+  color: var(--divider);
+}
+
+.import-btn .material-icons {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.note-play-btn .material-icons {
+  font-size: 24px;
+  color: white;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 添加更多样式... */
+
+/* 删除所有伪元素样式 */
+.back-btn::before,
+.mini-play-btn::before,
+.mini-play-btn.playing::before,
+.mini-next-btn::before,
+.mini-playlist-btn::before,
+.note-play-btn::before,
+.shuffle-btn::before,
+.prev-btn::before,
+.play-btn::before,
+.play-btn.playing::before,
+.next-btn::before,
+.repeat-btn::before,
+.download-icon::before,
+.playlist-icon::before,
+.lyrics-icon::before,
+.recommend-icon::before,
+.like-icon::before,
+.action-btn.active .like-icon::before,
+.comment-icon::before,
+.share-icon::before,
+.save-icon::before,
+.action-btn.active .save-icon::before,
+.song-cover-placeholder::before {
+  content: none;
+  display: none;
+}
+
+/* Material Icons样式调整 */
+.material-icons {
+  vertical-align: middle;
+  font-size: 20px;
+}
+
+.nav-item .material-icons {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.action-btn .material-icons {
+  font-size: 18px;
+  margin-right: 4px;
+  color: var(--text-lighter);
+}
+
+.action-btn.active .material-icons {
+  color: var(--primary-color);
+}
+
+.mini-controls .material-icons {
+  font-size: 20px;
+  color: white;
+}
+
+.search-icon.material-icons {
+  font-size: 16px;
+  color: var(--text-lighter);
+}
+
+.section-title .material-icons {
+  margin-right: 8px;
+  color: var(--primary-color);
+}
+
+.refresh-icon.material-icons {
+  animation: spin 1.5s linear infinite;
+}
+
+.empty-icon .material-icons {
+  font-size: 60px;
+  color: var(--divider);
+}
+
+.import-btn .material-icons {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.note-play-btn .material-icons {
+  font-size: 24px;
+  color: white;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 添加更多样式... */
+
+.recommendation-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.recommendation-cover {
+  width: 100%;
+  height: 100px;
+  position: relative;
+  background: linear-gradient(45deg, #ff85a8, #ff4e8a);
+  overflow: hidden;
+}
+
+.recommendation-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.recommendation-cover-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.5) 100%);
+}
+
+.recommendation-content {
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recommendation-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: -32px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+  background-color: white;
+}
+
+.recommendation-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.recommendation-match {
+  font-size: 12px;
+  color: var(--primary-color);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.recommendation-match .material-icons {
+  font-size: 14px;
+  color: var(--primary-color);
+}
+
+.common-interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+
+.common-interest {
+  font-size: 12px;
+  color: var(--text-light);
+  background-color: var(--divider);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.recommendation-card .follow-btn {
+  width: auto;
+  min-width: 80px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.discussion-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--divider);
+}
+
+.discussion-actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: all 0.3s;
+  padding: 8px 12px;
+  border-radius: 20px;
+}
+
+.action-btn:hover {
+  color: var(--primary-color);
+  background-color: rgba(255, 78, 138, 0.1);
+}
+
+.action-btn .material-icons {
+  font-size: 20px;
+}
+
+.action-btn span:not(.material-icons) {
+  font-size: 14px;
+} 
+} 
